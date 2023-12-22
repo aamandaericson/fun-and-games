@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 
 """
 Django settings for fun_and_games project.
@@ -27,7 +28,8 @@ SECRET_KEY = 'django-insecure-()+xvgm3z*rm=@2tc0+%z+pn8=28h77pz(k&j19#wo6ybp^v-l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-aamandaericson-fun-and-g-09tx5yia8p.us2.codeanyapp.com']
+ALLOWED_HOSTS = [
+    '8000-aamandaericson-fun-and-g-09tx5yia8p.us2.codeanyapp.com', 'fun-and-games-app', 'localhost']
 
 
 # Application definition
@@ -101,12 +103,17 @@ WSGI_APPLICATION = 'fun_and_games.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

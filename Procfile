@@ -1,0 +1,1 @@
+web: gunicorn fun-and-games-app.wsgi:application
